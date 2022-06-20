@@ -20,7 +20,7 @@ Product.init(
       allowNull: false,
     },
     price: {
-      //added arguments to decimal for accuracy. 
+      //added arguments to decimal for accuracy.
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       validate: {
@@ -48,7 +48,7 @@ Product.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product',
+    modelName: "product",
   }
 );
 
