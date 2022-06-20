@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//find a tag and all associated products using its tag_id
 router.get("/:id", async (req, res) => {
   try {
     const tagsById = await Tag.findByPk(req.params.id, {
@@ -32,6 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//creates a new tag
 router.post("/", async (req, res) => {
   try {
     const createTag = await Tag.create({
@@ -43,12 +45,34 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
-  // update a tag's name by its `id` value
+// update a tag's name by its `id` value
+router.put("/:id", async (req, res) => {
+  try {
+    const updateTag = await Tag.update(
+      { tag_name: req.body.tag_name },
+      { where: { id: req.params.id } }
+    );
+    res.status(200).json(updateTag);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
-router.delete("/:id", (req, res) => {
-  // delete on tag by its `id` value
+// delete a tag by its `id` value
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedTag = await Tag.destroy({
+      where: { id: req.params.id },
+    });
+    if (!deletedTag) {
+      return res.status(404).json({
+        message: `This tag ID does not exist. Please enter a valid tag ID!`,
+      });
+    }
+    res.status(200).json(deletedTag);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
 module.exports = router;
