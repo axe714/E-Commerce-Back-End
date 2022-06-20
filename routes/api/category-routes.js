@@ -3,6 +3,7 @@ const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
 
+//get all categories including the products under that category
 router.get("/", async (req, res) => {
   try {
     const showAllCategory = await Category.findAll({
@@ -15,6 +16,7 @@ router.get("/", async (req, res) => {
   return;
 });
 
+//get 1 category by its category_id
 router.get("/:id", async (req, res) => {
   try {
     const categoryById = await Category.findByPk(req.params.id, {
@@ -34,6 +36,7 @@ router.get("/:id", async (req, res) => {
   return;
 });
 
+//create a new category
 router.post("/", async (req, res) => {
   try {
     const createCategory = await Category.create({
@@ -47,6 +50,7 @@ router.post("/", async (req, res) => {
   return;
 });
 
+//update a category using its category_id
 router.put("/:id", async (req, res) => {
   try {
     //where clause is needed so that it knows which category_id to edit
@@ -61,12 +65,14 @@ router.put("/:id", async (req, res) => {
   return;
 });
 
+//delete a category using its category_id
 router.delete("/:id", async (req, res) => {
   try {
     //where clause is needed so that it knows which category_id to delete
     const deletedCategory = await Category.destroy({
       where: { id: req.params.id },
     });
+    //error handling for when user inputs a category_id that does not exist
     if (!deletedCategory) {
       res.status(404).json({
         message: `This category ID does not exist. Please enter a valid category ID!`,
