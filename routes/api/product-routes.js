@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
       include: [{ model: Category }, { model: Tag }],
     });
     res.status(200).json(showAllProducts);
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
     return;
   }
@@ -19,22 +19,24 @@ router.get("/", async (req, res) => {
 // get one product by its product_id
 router.get("/:id", async (req, res) => {
   try {
-  const productById = await Product.findByPk(req.params.id, {
-    include: [{ model: Category }, { model: Tag }],
-  });
-  if(!productById) {
-    res.status(404).statusMessage({
-      message: `This product ID does not exist. Please enter a valid category ID!`,
-    })
+    const productById = await Product.findByPk(req.params.id, {
+      include: [{ model: Category }, { model: Tag }],
+    });
+    if (!productById) {
+      res.status(404).json({
+        message: `This product ID does not exist. Please enter a valid category ID!`,
+      });
+      return;
+    }
+    res.status(200).json(productById);
+  } catch (err) {
+    res.status(500).json(err);
+    return;
   }
-  res.status(200).json(productById)
-} catch {
-  res.status(500).json(err)
-}
 });
 
 // create new product
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -107,8 +109,24 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
-  // delete one product by its `id` value
+//delete a product by its product_id
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedProduct = await Product.destroy({
+      where: { id: req.params.id },
+    });
+    //error handling for when user inputs a product_id that does not exist
+    if (!deletedProduct) {
+      res.status(404).json({
+        message: `This category ID does not exist. Please enter a valid category ID!`,
+      });
+      return;
+    }
+    res.status(200).json(deletedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+    return;
+  }
 });
 
 module.exports = router;

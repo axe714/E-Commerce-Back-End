@@ -10,10 +10,10 @@ router.get("/", async (req, res) => {
       include: [{ model: Product }],
     });
     res.status(200).json(showAllCategory);
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
+    return;
   }
-  return;
 });
 
 //get 1 category by its category_id
@@ -28,12 +28,13 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({
         message: `This category ID does not exist. Please enter a valid category ID!`,
       });
+      return;
     }
     res.status(200).json(categoryById);
   } catch (err) {
     res.status(500).json(err);
+    return;
   }
-  return;
 });
 
 //create a new category
@@ -44,10 +45,10 @@ router.post("/", async (req, res) => {
       category_name: req.body.category_name,
     });
     res.status(200).json(createCategory);
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
+    return;
   }
-  return;
 });
 
 //update a category using its category_id
@@ -59,10 +60,10 @@ router.put("/:id", async (req, res) => {
       { where: { id: req.params.id } }
     );
     res.status(200).json(updateCategory);
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
+    return;
   }
-  return;
 });
 
 //delete a category using its category_id
@@ -77,12 +78,13 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({
         message: `This category ID does not exist. Please enter a valid category ID!`,
       });
+      return;
     }
     res.status(200).json(deletedCategory);
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
+    return;
   }
-  return;
 });
 
 module.exports = router;
