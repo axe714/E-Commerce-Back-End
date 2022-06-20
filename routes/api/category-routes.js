@@ -25,15 +25,13 @@ router.get("/:id", async (req, res) => {
     });
     //checks to see if the category id exists, if not, send a status 404 and its message
     if (!categoryById) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `This category ID does not exist. Please enter a valid category ID!`,
       });
-      return;
     }
     res.status(200).json(categoryById);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
@@ -46,8 +44,7 @@ router.post("/", async (req, res) => {
     });
     res.status(200).json(createCategory);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
@@ -61,8 +58,7 @@ router.put("/:id", async (req, res) => {
     );
     res.status(200).json(updateCategory);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
@@ -75,15 +71,13 @@ router.delete("/:id", async (req, res) => {
     });
     //error handling for when user inputs a category_id that does not exist
     if (!deletedCategory) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `This category ID does not exist. Please enter a valid category ID!`,
       });
-      return;
     }
     res.status(200).json(deletedCategory);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 

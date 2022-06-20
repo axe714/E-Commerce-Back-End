@@ -11,8 +11,7 @@ router.get("/", async (req, res) => {
     });
     res.status(200).json(showAllProducts);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
@@ -23,15 +22,13 @@ router.get("/:id", async (req, res) => {
       include: [{ model: Category }, { model: Tag }],
     });
     if (!productById) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `This product ID does not exist. Please enter a valid category ID!`,
       });
-      return;
     }
     res.status(200).json(productById);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
@@ -117,15 +114,13 @@ router.delete("/:id", async (req, res) => {
     });
     //error handling for when user inputs a product_id that does not exist
     if (!deletedProduct) {
-      res.status(404).json({
-        message: `This category ID does not exist. Please enter a valid category ID!`,
+      return res.status(404).json({
+        message: `This product ID does not exist. Please enter a valid category ID!`,
       });
-      return;
     }
     res.status(200).json(deletedProduct);
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
 });
 
