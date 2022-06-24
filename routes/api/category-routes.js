@@ -52,10 +52,18 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     //where clause is needed so that it knows which category_id to edit
+    const checkCategoryId = await Category.findByPk(req.params.id);
     const updateCategory = await Category.update(
       { category_name: req.body.category_name },
       { where: { id: req.params.id } }
     );
+    if (!checkCategoryId) {
+      return res
+        .status(404)
+        .json({
+          message: `This category ID does not exist. Please enter a valid category ID!`,
+        });
+    }
     res.status(200).json(updateCategory);
   } catch (err) {
     return res.status(500).json(err);
