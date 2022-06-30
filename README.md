@@ -2,7 +2,7 @@
 
 ![MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
-[![E-commerce Back End -PENDING-](#picturelink)](#)
+[![E-commerce Back End](https://img.youtube.com/vi/WYnyP7inr6s/0.jpg)](https://www.youtube.com/watch?v=WYnyP7inr6s)
 
 ## Description 📍
 - An application that replicates the backend of an e-commerce website which utilizes node, express and sequelize to interact with a MySQL database.
@@ -26,7 +26,7 @@
  4. Run ```node index.js``` in the terminal to sync sequelize and start the server 
 
 ## Youtube 
-- [E-commerce Back End Video -PENDING-](#)
+- [E-commerce Back End Video](https://www.youtube.com/watch?v=WYnyP7inr6s)
 
 ## Usage  
 
